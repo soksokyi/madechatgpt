@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>JSON 데이터 출력</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="result"></div>
+    <script>
+      var requestUrl = "https://api.nongsaro.go.kr/service/pesticideSalePrice/yearGubunList?apiKey=202212197E6JRWZXMYKL7TWNMQXOQ";
+
+      $.getJSON(requestUrl, function(data) {
+        var html = "<ul>";
+        $.each(data["response"]["body"]["items"]["item"], function(index, item) {
+          html += "<li>" + item["yearGubunNm"] + "</li>";
+        });
+        html += "</ul>";
+        $("#result").html(html);
+      });
+    </script>
+  </body>
+</html>
