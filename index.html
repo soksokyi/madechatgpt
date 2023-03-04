@@ -2,21 +2,32 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>JSON 데이터 출력</title>
+    <title>농약 판매 가격 정보 가져오기</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <div id="result"></div>
     <script>
-      var requestUrl = "https://api.nongsaro.go.kr/service/pesticideSalePrice/yearGubunList?apiKey=202212197E6JRWZXMYKL7TWNMQXOQ";
+      var apiKey = "202212197E6JRWZXMYKL7TWNMQXOQ";
+      var serviceName = "pesticideSalePrice";
+      var operationName = "yearGubunList";
+      var url = "http://api.nongsaro.go.kr/service/" + serviceName + "/" + operationName + "?apiKey=" + apiKey;
 
-      $.getJSON(requestUrl, function(data) {
-        var html = "<ul>";
-        $.each(data["response"]["body"]["items"]["item"], function(index, item) {
-          html += "<li>" + item["yearGubunNm"] + "</li>";
-        });
-        html += "</ul>";
-        $("#result").html(html);
+      $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+          var html = "<ul>";
+          $.each(data.response.body.items.item, function(index, item) {
+            html += "<li>" + item.yearGubunNm + "</li>";
+          });
+          html += "</ul>";
+          $("#result").html(html);
+        },
+        error: function(xhr, status, error) {
+          alert("에러 발생: " + error);
+        }
       });
     </script>
   </body>
